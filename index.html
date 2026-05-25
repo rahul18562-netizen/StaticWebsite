@@ -1,10 +1,336 @@
+Q1 Initialize a Git repository, create a text file, and perform add and commit operations using Git commands.
+ANS:  mkdir GitPractical
+cd GitPractical
+git init
+echo Hello Git > demo.txt
+git status
+git add demo.txt
+git status
+git commit -m "First commit"
+git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
+git log
+
+
+2. Create a GitHub repository and push a local project to the remote repository.
+the main branch.
+mkdir GitExperiment
+cd GitExperiment
+notepad index.html
+<html>
+<head>
+<title>GitHub Practical</title>
+</head>
+<body>
+<h1>Hello GitHub</h1>
+</body>
+</html>
+git init
+git branch -M main
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/username/GitExperiment.git
+git push -u origin main
+
+Q3 Create two branches in Git, modify a file in both branches, and merge them into
+mkdir BranchExperiment
+cd BranchExperiment
+git init
+notepad demo.txt
+This is main branch file.
+git add demo.txt
+git commit -m "Initial commit"
+git branch branch1
+git branch branch2
+git checkout branch1
+notepad demo.txt
+Modified in branch1.
+git add demo.txt
+git commit -m "Modified in branch1"
+git checkout branch2
+notepad demo.txt
+Modified in branch2.
+git add demo.txt
+git commit -m "Modified in branch2"
+git checkout master
+git merge branch1
+git merge branch2
+
+
+
+
+
+
+
+
+
+
+Q4 Create a pull request in GitHub and resolve a simple merge conflict between two branch
+mkdir PRExperiment
+cd PRExperiment
+git init
+
+notepad demo.txt
+git add demo.txt
+Hello from Main Branch
+git add demo.txt
+git commit -m "Initial commit"
+
+git remote add origin REPOSITORY_URL
+git branch -M main
+git push -u origin main
+
+git checkout -b branch1
+notepad demo.txt
+Hello from Branch1
+git add .
+git commit -m "Updated in branch1"
+git push origin branch1
+
+git checkout main
+
+git checkout -b branch2
+notepad demo.txt
+Hello from Branch2
+git add .
+git commit -m "Updated in branch2"
+git push origin branch2
+
+
+
+
+Q5Configure a basic GitHub Actions workflow to automatically display a build success message on every push.
+mkdir GitHubActionExperiment
+cd GitHubActionExperiment
+git init
+notepad demo.txt
+Hello GitHub Actions
+mkdir .github
+mkdir .github\workflows
+notepad .github\workflows\main.yml
+name: Build Success Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Display Success Message
+        run: echo "Build Successful!"
+
+git add .
+git commit -m "Added workflow"
+git remote add origin REPOSITORY_URL
+
+git branch -M main
+git push -u origin main
+
+Q6 Create a simple CI/CD workflow using GitHub Actions to build and deploy a static HTML page.
+mkdir CICDExperiment
+cd CICDExperiment
+git init
+notepad index.html
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My CI/CD Website</title>
+    <title>CI/CD Demo</title>
 </head>
 <body>
     <h1>Welcome to GitHub Actions CI/CD</h1>
-    <p>Static HTML page deployed successfully.</p>
+    <p>Static website deployed successfully.</p>
 </body>
 </html>
+mkdir .github
+mkdir .github\workflows
+notepad .github\workflows\deploy.yml
+name: Deploy Static Website
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+git add .
+git commit -m "Added CI/CD workflow"
+git remote add origin REPOSITORY_URL
+git branch -M main
+git push -u origin main
+Settings → Pages  Source → GitHub Actions 
+Actions
+
+
+
+
+
+
+
+
+
+
+
+Q7 Implement automated testing in GitHub Actions using a sample Python or Node.js test file.
+mkdir PythonTestExperiment
+cd PythonTestExperiment
+git init
+
+notepad app.py
+def add(a, b):
+    return a + b
+notepad test_app.py
+from app import add
+
+def test_add():
+    assert add(2, 3) == 5
+mkdir .github
+mkdir .github\workflows
+notepad .github\workflows\python-test.yml
+name: Python Automated Testing
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pytest
+        run: pip install pytest
+
+      - name: Run Tests
+        run: pytest
+
+git add .
+git commit -m "Added automated testing"
+git remote add origin REPOSITORY_URL
+git branch -M main
+git push -u origin main
+Click: Actions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+8. Create a Dockerfile for a simple web application and build a Docker image successfully.
+mkdir DockerExperiment
+cd DockerExperiment
+notepad index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Docker Web App</title>
+</head>
+
+<body>
+    <h1>Hello Docker!</h1>
+    <p>Simple web application running inside Docker container.</p>
+</body>
+</html>
+
+echo FROM nginx:latest> Dockerfile
+echo COPY index.html /usr/share/nginx/html/index.html>> Dockerfile
+type Dockerfile
+docker build -t docker-web-app .
+docker images
+docker run -d -p 8080:80 docker-web-app
+docker ps
+http://localhost:8080
+
+
+
+
+
+
+
+
+
+
+Q9 Use Docker Compose to run two containers together such as a web server and database service.
+mkdir ComposeExperiment
+cd ComposeExperiment
+notepad index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Docker Compose Experiment</title>
+</head>
+
+<body>
+    <h1>Hello Docker Compose!</h1>
+    <p>Web server and Redis container running together.</p>
+</body>
+</html>
+notepad Dockerfile
+FROM nginx:latest
+COPY index.html /usr/share/nginx/html/index.html
+notepad docker-compose.yml
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+  redis:
+    image: redis:alpine
+
+dir
+docker compose up -d
+docker ps
+docker compose down
